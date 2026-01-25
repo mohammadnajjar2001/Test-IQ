@@ -175,6 +175,24 @@
             opacity: 0.5;
             pointer-events: none;
         }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .mark-badge {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -201,12 +219,12 @@
     </div>
 
     <script>
-       const marks = {
+        const marks = {
             1: 3, 2: 3, 3: 3,
             4: 3, 5: 3, 6: 3, 7: 3.5, 8: 4,
             9: 4, 10: 4, 11: 4, 12: 4, 13: 4, 14: 4, 15: 4, 16: 4, 17: 4, 18: 4, 19: 5,
             20: 5, 21: 5, 22: 5, 23: 5, 24: 5, 25: 5
-        }; 
+        };
 
         const rawKey = {
             1: "د", 2: "ب", 3: "ج", 4: "أ", 5: "د",
@@ -240,8 +258,10 @@
             else div.classList.add("group-4");
 
             div.innerHTML = `
-                <label>السؤال ${i} (${marks[i]} درجات)</label>
-
+                <div class="question-header">
+                    <label>السؤال ${i}</label>
+                    <span class="mark-badge">${marks[i]} درجة</span>
+                </div>
                 <label style="display:flex;align-items:center; gap:8px; margin-bottom:10px;">
                     <input type="checkbox" id="direct${i}">
                     ✅ إجابة صحيحة (تجاوز الخيارات)
@@ -312,4 +332,3 @@
 </body>
 
 </html>
-
