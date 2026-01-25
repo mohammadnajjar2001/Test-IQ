@@ -175,6 +175,24 @@
             opacity: 0.5;
             pointer-events: none;
         }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .mark-badge {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -240,7 +258,10 @@
             else div.classList.add("group-4");
 
             div.innerHTML = `
-                <label>السؤال ${i} (${marks[i]} درجات)</label>
+                <div class="question-header">
+                    <label>السؤال ${i}</label>
+                    <span class="mark-badge">${marks[i]} درجة</span>
+                </div>
 
                 <label style="display:flex;align-items:center; gap:8px; margin-bottom:10px;">
                     <input type="checkbox" id="direct${i}">
@@ -312,4 +333,3 @@
 </body>
 
 </html>
-
