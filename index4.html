@@ -269,7 +269,7 @@
             form.appendChild(div);
         }
 
-        for (let i = 1; i <= 25; i++) {
+        for (let i = 1; i <= 16; i++) {
             const direct = document.getElementById(`direct${i}`);
             const optionsDiv = document.getElementById(`options${i}`);
 
@@ -291,7 +291,7 @@
         function calculateResult() {
             let total = 0;
 
-            for (let i = 1; i <= 25; i++) {
+            for (let i = 1; i <= 16; i++) {
                 const direct = document.getElementById(`direct${i}`);
 
                 if (direct.checked) {
