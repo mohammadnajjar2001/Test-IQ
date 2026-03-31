@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصحيح اختبار IQ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #005baa;
+            --secondary-color: #f8f9fa;
+            --accent-color: #27ae60;
+            --danger-color: #e74c3c;
+            --text-color: #2c3e50;
+            --card-color: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            background-color: var(--secondary-color);
+            margin: 0;
+            padding-bottom: 100px;
+            color: var(--text-color);
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: var(--card-color);
+            padding: 30px 25px 20px;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+        }
+
+        .question {
+            padding: 15px 18px;
+            background-color: #f9f9f9;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 0 1px #e0e0e0;
+        }
+
+        .question label {
+            font-size: 17px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* ✅ الخيارات تظهر بجانب بعض */
+        .options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 14px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 60px;
+            transition: 0.2s;
+        }
+
+        .options label:hover {
+            background: #eef5ff;
+        }
+
+        .options input {
+            margin-left: 6px;
+        }
+
+        .buttons-fixed {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: #ffffff;
+            padding: 15px 25px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        button {
+            padding: 14px 20px;
+            font-size: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #004080;
+        }
+
+        #customAlert {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .alert-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+        }
+
+        .alert-box p {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        #customAlert button {
+            padding: 10px 18px;
+            margin: 0 6px;
+        }
+
+        .group-1 {
+            background: #e3f2fd;
+        }
+
+        .group-2 {
+            background: #e8f5e9;
+        }
+
+        .group-3 {
+            background: #fffde7;
+        }
+
+        .group-4 {
+            background: #ffe0b2;
+        }
+
+        .options.disabled label {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .mark-badge {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">تصحيح اختبار IQ النموذج 3 🧠</div>
+    <div class="container">
+        <form id="iqForm"></form>
+    </div>
+
+    <div class="buttons-fixed">
+        <button id="calcBtn" type="button">احسب النتيجة</button>
+        <button id="reloadBtn" type="button">إعادة التحميل</button>
+        <button onclick="window.location.href='index.html'"> النموذج1</button>
+        <button onclick="window.location.href='index2.html'"> النموذج2</button>
+         <button onclick="window.location.href='index3.html'"> النموذج3</button>
+    </div>
+
+    <div id="customAlert">
+        <div class="alert-box">
+            <p id="alertMessage">النتيجة النهائية: 0</p>
+            <button id="reloadBtn2">🔄 إعادة التحميل</button>
+            <button class="alert-close" id="closeAlertBtn">❌ إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        const marks = {
+            1: 6, 2: 6, 3: 6,
+            4: 6, 5: 6, 6: 6, 7: 6, 8: 6,
+            9: 6, 10: 6, 11: 6, 12: 6, 13: 6, 14: 7.5, 15: 7.5, 16: 7.5
+        };
+
+        const rawKey = {
+            1: "ج", 2: "د", 3: "أ", 4: "ب", 5: "ج",
+            6: "ب", 7: "ب", 8: "أ", 9: "ج", 10: "ب",
+            11: "ج", 12: "د", 13: "أ", 14: "ج", 15: "ب",
+            16: "ج"
+        };
+
+        const map = { "أ": "a", "ب": "b", "ج": "c", "د": "d" };
+        const answerKey = {};
+        for (let i in rawKey) answerKey[i] = map[rawKey[i]];
+
+        const form = document.getElementById("iqForm");
+
+        for (let i = 1; i <= 16; i++) {
+            const div = document.createElement("div");
+            div.classList.add("question");
+
+            if (i <= 6) div.classList.add("group-1");
+            else if (i <= 12) div.classList.add("group-2");
+            else if (i <= 16) div.classList.add("group-3");
+            else div.classList.add("group-4");
+
+            div.innerHTML = `
+                <div class="question-header">
+                    <label>السؤال ${i}</label>
+                    <span class="mark-badge">${marks[i]} درجة</span>
+                </div>
+                <label style="display:flex;align-items:center; gap:8px; margin-bottom:10px;">
+                    <input type="checkbox" id="direct${i}">
+                    ✅ إجابة صحيحة (تجاوز الخيارات)
+                </label>
+
+                <div class="options" id="options${i}">
+                    <label><input type="radio" name="q${i}" value="a">a</label>
+                    <label><input type="radio" name="q${i}" value="b">b</label>
+                    <label><input type="radio" name="q${i}" value="c">c</label>
+                    <label><input type="radio" name="q${i}" value="d">d</label>
+                </div>
+            `;
+
+            form.appendChild(div);
+        }
+
+        for (let i = 1; i <= 25; i++) {
+            const direct = document.getElementById(`direct${i}`);
+            const optionsDiv = document.getElementById(`options${i}`);
+
+            direct.addEventListener("change", () => {
+                const radios = optionsDiv.querySelectorAll("input[type=radio]");
+                if (direct.checked) {
+                    radios.forEach(r => {
+                        r.checked = false;
+                        r.disabled = true;
+                    });
+                    optionsDiv.classList.add("disabled");
+                } else {
+                    radios.forEach(r => r.disabled = false);
+                    optionsDiv.classList.remove("disabled");
+                }
+            });
+        }
+
+        function calculateResult() {
+            let total = 0;
+
+            for (let i = 1; i <= 25; i++) {
+                const direct = document.getElementById(`direct${i}`);
+
+                if (direct.checked) {
+                    total += marks[i];
+                    continue;
+                }
+
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === answerKey[i]) {
+                    total += marks[i];
+                }
+            }
+
+            const score = (total * 0.9) + 60;
+            document.getElementById("alertMessage").textContent =
+                `النتيجة النهائية: ${score.toFixed(2)}`;
+            document.getElementById("customAlert").style.display = "flex";
+        }
+
+        document.getElementById("calcBtn").addEventListener("click", calculateResult);
+        document.getElementById("reloadBtn").addEventListener("click", () => location.reload());
+        document.getElementById("reloadBtn2").addEventListener("click", () => location.reload());
+        document.getElementById("closeAlertBtn").addEventListener("click", () => {
+            document.getElementById("customAlert").style.display = "none";
+        });
+
+    </script>
+
+</body>
+
+</html>
